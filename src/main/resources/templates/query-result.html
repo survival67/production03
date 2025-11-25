@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Результат виконання</title>
+    <style>
+        body { font-family: Arial, sans-serif; max-width: 900px; margin: 20px auto; padding: 20px; }
+        .query-box { background: #f0f0f0; padding: 10px; border-left: 5px solid #007bff; font-family: monospace; margin-bottom: 20px;}
+        .error { color: #721c24; background-color: #f8d7da; border: 1px solid #f5c6cb; padding: 15px; border-radius: 5px;}
+        .success { color: #155724; background-color: #d4edda; border: 1px solid #c3e6cb; padding: 15px; border-radius: 5px;}
+        
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+        th { background-color: #f2f2f2; font-weight: bold; }
+        tr:nth-child(even) { background-color: #f9f9f9; }
+        
+        .back-btn { display: inline-block; margin-top: 20px; padding: 10px 20px; background: #6c757d; color: white; text-decoration: none; border-radius: 4px;}
+    </style>
+</head>
+<body>
+
+    <h2>Результат виконання SQL</h2>
+
+    <div class="query-box">
+        <strong>Запит:</strong> <span th:text="${query}"></span>
+    </div>
+
+    <div th:if="${error}" class="error">
+        <strong>Помилка:</strong> <span th:text="${error}"></span>
+    </div>
+
+    <div th:if="${message}" class="success">
+        <span th:text="${message}"></span>
+    </div>
+
+    <div th:if="${resultList}">
+        <table>
+            <thead>
+                <tr>
+                    <th th:each="header : ${headers}" th:text="${header}">Header</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="row : ${resultList}">
+                    <td th:each="header : ${headers}" th:text="${row.get(header)}">Value</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <a href="/sql" class="back-btn">← Повернутись до форми</a>
+
+</body>
+</html>
