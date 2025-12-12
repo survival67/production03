@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Вхід у систему</title>
+    <style>
+        body { font-family: sans-serif; display: flex; justify-content: center; align-items: center; height: 100vh; background-color: #f4f4f4; }
+        .login-box { background: white; padding: 40px; border-radius: 8px; box-shadow: 0 0 10px rgba(0,0,0,0.1); text-align: center; width: 300px; }
+        input { width: 100%; padding: 10px; margin: 10px 0; border: 1px solid #ddd; border-radius: 4px; box-sizing: border-box;}
+        button { width: 100%; padding: 10px; background-color: #28a745; color: white; border: none; border-radius: 4px; cursor: pointer; font-weight: bold;}
+        button:hover { background-color: #218838; }
+        .error { color: red; margin-bottom: 10px; }
+    </style>
+</head>
+<body>
+    <div class="login-box">
+        <h2>Вхід</h2>
+        
+        <div th:if="${param.error}" class="error">
+            Невірний логін або пароль!
+        </div>
+
+        <div th:if="${param.logout}" style="color: green; margin-bottom: 10px;">
+            Ви успішно вийшли.
+        </div>
+
+        <form method="post" action="/login">
+            <input type="text" name="username" placeholder="Логін (admin/user)" required autofocus />
+            <input type="password" name="password" placeholder="Пароль" required />
+            <button type="submit">Увійти</button>
+        </form>
+        
+        <br>
+        <a href="/" style="text-decoration: none; color: #666;">← На головну</a>
+    </div>
+</body>
+</html>

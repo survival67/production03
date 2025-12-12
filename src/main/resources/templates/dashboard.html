@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>SQL Консоль</title>
+    <style>
+        body { 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+            background-color: #ffffff; 
+            color: #000000; 
+            margin: 0; 
+            padding: 20px; 
+        }
+        
+        .container { max-width: 1000px; margin: 0 auto; }
+        
+        h1 { text-align: center; border-bottom: 2px solid #000; padding-bottom: 15px; margin-bottom: 30px; }
+
+        .toolbar { 
+            display: grid; 
+            grid-template-columns: repeat(4, 1fr); 
+            gap: 10px; 
+            margin-bottom: 20px; 
+        }
+        
+        .btn-tpl { 
+            padding: 12px; 
+            border: 1px solid #000; 
+            background-color: #f0f0f0; 
+            color: #000; 
+            font-weight: bold; 
+            cursor: pointer; 
+            transition: background 0.2s;
+        }
+        .btn-tpl:hover { background-color: #e0e0e0; }
+
+        textarea { 
+            width: 100%; 
+            height: 120px; 
+            padding: 15px; 
+            font-family: 'Consolas', monospace; 
+            font-size: 14px; 
+            border: 2px solid #000; 
+            box-sizing: border-box; 
+            margin-bottom: 10px;
+            background-color: #fff; 
+            color: #000;
+        }
+        
+        .btn-run { 
+            width: 100%; 
+            padding: 15px; 
+            background-color: #000; 
+            color: #fff; 
+            border: none; 
+            font-size: 16px; 
+            font-weight: bold; 
+            cursor: pointer; 
+        }
+        .btn-run:hover { background-color: #333; }
+
+        .message { padding: 15px; margin-top: 20px; border: 1px solid #000; background-color: #f9f9f9; text-align: center; }
+        
+        .table-section { margin-top: 40px; }
+        h3 { border-bottom: 1px solid #ccc; padding-bottom: 10px; }
+
+        table { width: 100%; border-collapse: collapse; border: 1px solid #000; margin-bottom: 30px; }
+        th, td { padding: 10px; border: 1px solid #000; text-align: left; font-size: 14px; }
+        th { background-color: #eee; font-weight: bold; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>DATABASE CONSOLE</h1>
+
+    <div class="toolbar">
+        <button class="btn-tpl" onclick="setSql('SELECT * FROM products')">SELECT</button>
+        <button class="btn-tpl" onclick="setSql('INSERT INTO products VALUES (\\'uuid\\', \\'Name\\', \\'Serial\\', \\'Category\\')')">INSERT</button>
+        <button class="btn-tpl" onclick="setSql('UPDATE products SET name=\\'NewName\\' WHERE id=\\'uuid\\'')">UPDATE</button>
+        <button class="btn-tpl" onclick="setSql('DELETE FROM products WHERE id=\\'uuid\\'')">DELETE</button>
+    </div>
+
+    <form action="/dashboard/execute" method="post">
+        <textarea id="sqlArea" name="query" th:text="${lastCommand}" placeholder="Введіть команду тут..."></textarea>
+        <button type="submit" class="btn-run">ВИКОНАТИ</button>
+    </form>
+
+    <div th:if="${message}" class="message" th:text="${message}"></div>
+    <div th:if="${error}" class="message" style="color: red; border-color: red;" th:text="${error}"></div>
+
+    <div th:if="${productsList}" class="table-section">
+        <h3>Результат: Вироби</h3>
+        <table>
+            <thead>
+                <tr><th>ID</th><th>Назва</th><th>Серійний №</th><th>Категорія</th></tr>
+            </thead>
+            <tbody>
+                <tr th:each="p : ${productsList}">
+                    <td th:text="${p.getId()}"></td>
+                    <td th:text="${p.getName()}"></td>
+                    <td th:text="${p.getSerialNumber()}"></td>
+                    <td th:text="${p.getCategory()}"></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div th:if="${componentsList}" class="table-section">
+        <h3>Результат: Вузли</h3>
+        <table>
+            <thead>
+                <tr><th>ID</th><th>Назва</th><th>Опис</th><th>Parent ID</th></tr>
+            </thead>
+            <tbody>
+                <tr th:each="c : ${componentsList}">
+                    <td th:text="${c.id()}"></td>
+                    <td th:text="${c.name()}"></td>
+                    <td th:text="${c.description()}"></td>
+                    <td th:text="${c.productId()}"></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div th:if="${detailsList}" class="table-section">
+        <h3>Результат: Деталі</h3>
+        <table>
+            <thead>
+                <tr><th>ID</th><th>Назва</th><th>Матеріал</th><th>Кількість</th><th>Parent ID</th></tr>
+            </thead>
+            <tbody>
+                <tr th:each="d : ${detailsList}">
+                    <td th:text="${d.id()}"></td>
+                    <td th:text="${d.name()}"></td>
+                    <td th:text="${d.material()}"></td>
+                    <td th:text="${d.quantity()}"></td>
+                    <td th:text="${d.componentId()}"></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+</div>
+
+<script>
+    function setSql(text) { 
+        document.getElementById('sqlArea').value = text; 
+    }
+</script>
+
+</body>
+</html>

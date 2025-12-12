@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>401 - Не авторизовано</title>
+    <style>
+        body { font-family: sans-serif; text-align: center; padding-top: 100px; background-color: #fff3cd; color: #856404; }
+        .box { display: inline-block; padding: 40px; background: white; border-radius: 10px; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
+        h1 { margin: 0; font-size: 80px; }
+        /* Стиль для кнопки */
+        .btn { 
+            display: inline-block; 
+            padding: 10px 20px; 
+            background-color: #ffc107; 
+            color: #333; 
+            text-decoration: none; /* Прибирає підкреслення */
+            border-radius: 5px; 
+            font-weight: bold; 
+            margin-top: 20px; 
+            cursor: pointer;
+        }
+        .btn:hover { background-color: #e0a800; }
+    </style>
+</head>
+<body>
+    <div class="box">
+        <h1>🔒 401</h1>
+        <h2>Ви не авторизовані!</h2>
+        <p>Для доступу до цієї сторінки необхідно увійти в систему.</p>
+        
+        <a href="/login" class="btn">Увійти</a>
+        
+    </div>
+</body>
+</html>

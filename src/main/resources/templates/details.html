@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Деталі</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-4">
+    <div class="container">
+        <a class="navbar-brand" href="#">Production App</a>
+        <div class="navbar-nav">
+            <a class="nav-link" href="/products">Вироби</a>
+            <a class="nav-link" href="/components">Компоненти</a>
+            <a class="nav-link" href="/details">Деталі</a>
+        </div>
+    </div>
+</nav>
+
+<div class="container">
+    <h2>Список деталей</h2>
+    <a href="/admin/details/form" class="btn btn-primary mb-3">Додати деталь</a>
+
+    <table class="table table-striped table-bordered">
+        <thead class="table-dark">
+        <tr>
+            <th>ID</th>
+            <th>Назва</th>
+            <th>Матеріал</th>
+            <th>Кількість</th>
+            <th>ID Компоненту</th>
+            <th>Дії</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="detail : ${details}">
+            <td th:text="${detail.id}"></td>
+            <td th:text="${detail.name}"></td>
+            <td th:text="${detail.material}"></td>
+            <td th:text="${detail.quantity}"></td>
+            <td th:text="${detail.componentId}"></td>
+            <td>
+                <a th:href="@{/admin/details/form(id=${detail.id})}" class="btn btn-warning btn-sm">Редагувати</a>
+                <form th:action="@{/admin/details/delete/{id}(id=${detail.id})}" method="post" style="display:inline;">
+                    <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Видалити?')">Видалити</button>
+                </form>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>

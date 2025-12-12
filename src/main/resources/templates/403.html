@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>403 - Доступ заборонено</title>
+    <style>
+        body { font-family: sans-serif; background-color: #f8f9fa; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; }
+        .container { text-align: center; background: white; padding: 40px; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); max-width: 500px; }
+        h1 { color: #dc3545; font-size: 80px; margin: 0; }
+        h2 { color: #333; margin-top: 10px; }
+        p { color: #666; margin-bottom: 20px; }
+        .btn { display: inline-block; padding: 10px 20px; background-color: #007bff; color: white; text-decoration: none; border-radius: 5px; font-weight: bold; }
+        .btn:hover { background-color: #0056b3; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>403</h1>
+        <h2>Доступ заборонено</h2>
+        <p>Вибачте, у вас немає прав для виконання цієї дії або перегляду цієї сторінки.</p>
+        <a href="/dashboard" class="btn">Повернутися на Дашборд</a>
+    </div>
+</body>
+</html>
